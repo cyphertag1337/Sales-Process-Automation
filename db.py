@@ -6,7 +6,7 @@ import sqlite3
 def createLeadTable():
     con = sqlite3.connect("sales.db")
     cur = con.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS Leads(LEAD_ID INTEGER PRIMARY KEY, NAME VARCHAR(50), EMAIL VARCHAR(20), PHONE_NO NUMBER(10), DESCRIPTION LONGTEXT, IS_CONVERTED BOOLEAN)")
+    cur.execute("CREATE TABLE IF NOT EXISTS Leads(LEAD_ID INTEGER PRIMARY KEY, NAME VARCHAR(50), EMAIL VARCHAR(20), PHONE_NO NUMBER(10), STATUS LONGTEXT, IS_CONVERTED BOOLEAN)")
     con.commit()
     con.close()
     
@@ -35,10 +35,10 @@ def createOrderTable():
     
 #======================================================FUNCTIONS=========================================================================================================================
 
-def addLeadData(NAME='', EMAIL='', PHONE_NO='', DESCRIPTION='', IS_CONVERTED=False):
+def addLeadData(NAME='', EMAIL='', PHONE_NO='', STATUS='', IS_CONVERTED=False):
     con = sqlite3.connect("sales.db")
     cur = con.cursor()
-    cur.execute("INSERT INTO Leads VALUES(NULL, ?,?,?,?,?)", (NAME, EMAIL, PHONE_NO, DESCRIPTION, IS_CONVERTED))
+    cur.execute("INSERT INTO Leads VALUES(NULL, ?,?,?,?,?)", (NAME, EMAIL, PHONE_NO, STATUS, IS_CONVERTED))
     con.commit()
     con.close()
 
@@ -46,13 +46,6 @@ def convertLead(Id):
     con = sqlite3.connect('sales.db')
     cur = con.cursor()
     cur.execute(f'UPDATE Leads SET IS_CONVERTED=True WHERE LEAD_ID={Id}')
-    con.commit()
-    con.close()
-
-def addCustomerData(ID, NAME, EMAIL, PHONE_NO):
-    con = sqlite3.connect("sales.db")
-    cur = con.cursor()
-    cur.execute("INSERT INTO Customers VALUES(NULL, ?,?,?)", (NAME, EMAIL, PHONE_NO))
     con.commit()
     con.close()
     
