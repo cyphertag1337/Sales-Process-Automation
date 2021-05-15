@@ -41,6 +41,7 @@ def new_order(cust_id):
     else:
         return flask.render_template('new_order.html', cust_id=cust_id)
 
+
 @app.route('/leads/new', methods=['GET', 'POST'])
 def new_lead():
     if flask.request.method == 'POST':
@@ -50,25 +51,17 @@ def new_lead():
             flask.request.form['phone'],
             flask.request.form['status'],
         )
+        print('posted new lead')
         return flask.redirect(url_for('leads_page'))
     else:
         return flask.render_template('new_lead.html')
 
 if __name__ == '__main__':        
 
-    # # set up tables
-    # db.createLeadTable()
-    # db.createCustomerTable()
-    # db.createOrderTable()
+    # set up tables
+    db.createLeadTable()
+    db.createCustomerTable()
+    db.createOrderTable()
 
-    # # test data
-    # db.addLeadData('Carol Shelby', 'cshel@shelby.com', '8860119033', 'Warm Hot', False)
-    # db.addLeadData('Ken Miles', 'kmiles@shelby.com', '9711051129', 'Warm Hot', False)
-    # db.addOrderData(1, 100, 20)
-
-    # # debug
-    # print(db.fetchLeadData())
-    # print(db.fetchCustomerData())
-    # print(db.fetchOrderData())
-
+    # run the app
     app.run(debug=True)

@@ -92,11 +92,15 @@
                                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                                         {{ lead[4] }}
                                                     </span>
-                                                    {% elif lead[4] == 'Warm' %}
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                    {% endif %}
+
+                                                    {% if lead[4] == 'Warm' %}
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                                         {{ lead[4] }}
                                                     </span>
-                                                    {% else %}
+                                                    {% endif %}
+
+                                                    {% if lead[4] == 'Cold' %}
                                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                                                         {{ lead[4] }}
                                                     </span>
@@ -107,7 +111,9 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 <center>
                                                     {% if lead[5] %}
-                                                        &#10004;
+                                                        ✔
+                                                    {% else %}
+                                                        ➖
                                                     {% endif %}
                                                 </center>
                                             </td>
