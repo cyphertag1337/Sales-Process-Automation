@@ -101,7 +101,10 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="{{ url_for('convert_lead', id=lead[0]) }}" class="text-indigo-600 hover:text-indigo-900">
-                                                    Convert
+                                                    {% if not lead[5] %}
+                                                        Convert
+                                                    {% endif %}
+                                                    
                                                 </a>
                                             </td>
                                         </tr>

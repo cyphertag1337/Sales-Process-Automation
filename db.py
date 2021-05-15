@@ -74,10 +74,10 @@ def fetchCustomerData():
     con.close()
     return rows
 
-def fetchOrderData():
+def fetchOrderData(cust_id):
     con = sqlite3.connect("sales.db")
     cur = con.cursor()
-    cur.execute('SELECT * FROM Orders')
+    cur.execute('SELECT * FROM Orders WHERE CUST_ID = ' + cust_id)
     rows = cur.fetchall()
     con.close()
     return rows

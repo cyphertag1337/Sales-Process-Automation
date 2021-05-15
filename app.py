@@ -1,7 +1,7 @@
 # imports
-from flask.helpers import url_for
 import db
 import flask
+from flask.helpers import url_for
 
 app = flask.Flask(__name__)
 
@@ -19,22 +19,42 @@ def customers_page():
     customers = db.fetchCustomerData()
     return flask.render_template('customers_page.html', customers = customers)
 
+@app.route('/orders/<cust_id>', methods=['GET'])
+def orders_page(cust_id):
+    orders = db.fetchOrderData(cust_id = cust_id)
+    return flask.render_template('orders_page.html', orders = orders, cust_id = cust_id)
+
 @app.route('/leads/convert/<id>', methods=['GET'])
 def convert_lead(id):
-    print('Converted -->' + str(id))
     db.convertLead(id)
     return flask.redirect(url_for('leads_page'))
 
-# @app.route('/order/new/<cust_id>', methods=['GET'])
-# def add_order(cust_id):
-#     print('Ordered For -->' + str(cust_id))
-#     db.
+@app.route('/orders/new/<cust_id>', methods=['GET', 'POST'])
+def new_order(cust_id):
+    if flask.request.method == 'POST':
+        db.addOrderData(
+            cust_id,
+            float(flask.request.form['subtotal']),
+            float(flask.request.form['discount'])
+        )
+        return flask.redirect(url_for('orders_page', cust_id=cust_id))
+    else:
+        return flask.render_template('new_order.html', cust_id=cust_id)
 
 @app.route('/leads/new', methods=['GET', 'POST'])
 def new_lead():
-    return flask.render_template('new_lead.html')
+    if flask.request.method == 'POST':
+        db.addLeadData(
+            flask.request.form['name'],
+            flask.request.form['email'],
+            flask.request.form['phone'],
+            flask.request.form['status'],
+        )
+        return flask.redirect(url_for('leads_page'))
+    else:
+        return flask.render_template('new_lead.html')
 
-if __name__ == '__main__':
+if __name__ == '__main__':        
 
     # # set up tables
     # db.createLeadTable()
